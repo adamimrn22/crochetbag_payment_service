@@ -29,7 +29,7 @@ class FpxPayment {
           issuer: issuer,
         },
         countryCode: "MY",
-        returnUrl: `${process.env.BASE_URL}/adyen/redirect`,
+        returnUrl: `${process.env.BASE_URL}/api/adyen/redirect`,
         channel: "Android",
         shopperLocale: "en_MY",
       };
