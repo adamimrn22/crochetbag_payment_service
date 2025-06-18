@@ -5,7 +5,7 @@ const GetPayment = require("../controller/Payment/GetPayment");
 
 const router = express.Router();
 
-router.get("/paymentMethod", GetPayment.getPaymentMethods);
+router.get("/paymentMethods", GetPayment.getPaymentMethods);
 router.post("/payByCard", CardPayment.createCardPayment);
 router.post("/payByFPX", FpxPayment.createFpxPayment);
 
