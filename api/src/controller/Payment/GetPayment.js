@@ -21,7 +21,7 @@ class GetPayment {
       const response = await checkout.PaymentsApi.paymentMethods(
         paymentMethodsRequest,
         {
-          amount: amount,
+          amount: amount.currency,
           idempotencyKey: idempotencyKey,
         }
       );
