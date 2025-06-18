@@ -1,6 +1,5 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("./mycrochetbag-47372-firebase-adminsdk-fbsvc-d7a6872f95.json"); // adjust this path
-
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 // Prevent multiple initializations
 if (!admin.apps.length) {
   admin.initializeApp({
