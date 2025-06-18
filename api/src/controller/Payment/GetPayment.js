@@ -1,7 +1,7 @@
 const { checkout } = require("../../config/adyen");
 
 class GetPayment {
-  async getFpxBankIssuer(req, res) {
+  async getPaymentMethods(req, res) {
     const idempotencyKey = uuidv4();
 
     const amount = {
