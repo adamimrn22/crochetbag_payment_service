@@ -23,11 +23,18 @@ class CardPayment {
       // Test Account
       const paymentType = {
         type: "scheme",
-        encryptedCardNumber: `test_${paymentMethod.encryptedCardNumber}`,
-        encryptedExpiryMonth: `test_${paymentMethod.encryptedExpiryMonth}`,
-        encryptedExpiryYear: `test_${paymentMethod.encryptedExpiryYear}`,
-        encryptedSecurityCode: `test_${paymentMethod.encryptedSecurityCode}`,
+        encryptedCardNumber: `test_5555555555554444`,
+        encryptedExpiryMonth: `test_03`,
+        encryptedExpiryYear: `test_2030`,
+        encryptedSecurityCode: `test_737`,
       };
+      // const paymentType = {
+      //   type: "scheme",
+      //   encryptedCardNumber: `test_${paymentMethod.encryptedCardNumber}`,
+      //   encryptedExpiryMonth: `test_${paymentMethod.encryptedExpiryMonth}`,
+      //   encryptedExpiryYear: `test_20${paymentMethod.encryptedExpiryYear}`,
+      //   encryptedSecurityCode: `test_${paymentMethod.encryptedSecurityCode}`,
+      // };
 
       // Create order in Firestore
       const orderId = db.collection("orders").doc().id;
@@ -54,6 +61,24 @@ class CardPayment {
         merchantReference,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
+
+      const itemsRef = db.collection("cart").doc(userId).collection("items");
+
+      const snapshot = await itemsRef.get();
+
+      const batch = db.batch();
+
+      snapshot.forEach((doc) => {
+        const cartRef = db
+          .collection("cart")
+          .doc(userId)
+          .collection("items")
+          .doc(doc.id);
+
+        batch.delete(cartRef);
+      });
+
+      await batch.commit();
 
       // Initiate Adyen payment
       const paymentRequest = {

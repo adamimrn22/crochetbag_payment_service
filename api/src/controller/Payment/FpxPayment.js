@@ -53,6 +53,24 @@ class FpxPayment {
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
+      const itemsRef = db.collection("cart").doc(userId).collection("items");
+
+      const snapshot = await itemsRef.get();
+
+      const batch = db.batch();
+
+      snapshot.forEach((doc) => {
+        const cartRef = db
+          .collection("cart")
+          .doc(userId)
+          .collection("items")
+          .doc(doc.id);
+
+        batch.delete(cartRef);
+      });
+
+      await batch.commit();
+
       // Call Adyen API to initiate payment
       const response = await checkout.PaymentsApi.payments(paymentRequest);
 
