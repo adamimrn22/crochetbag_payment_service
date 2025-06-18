@@ -2,3 +2,4 @@ node_modules/
 .env
 api/src/config/mycrochetbag-47372-firebase-adminsdk-fbsvc-d7a6872f95.json
 
+.vercel
